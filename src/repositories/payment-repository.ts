@@ -10,7 +10,7 @@ async function registerPayment(payment: Payment) {
       [payment.value, payment.description]
     );
   } catch (error) {
-    console.log(error)
+    throw error
   }
 }
 
