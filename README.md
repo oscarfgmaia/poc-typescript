@@ -4,8 +4,31 @@
 
 ## Get list of Payments
 
-### Requests
+## About
 
+ This application assists in log payments
+
+## How to run for development
+
+1. Clone this repository
+2. Install all dependencies
+
+bash
+npm i
+
+
+3. Create a new PostgreSQL database using the file dump.sql
+5. Run the back-end in a development environment:
+
+bash
+npm run dev
+
+## Starting for production
+
+bash
+npm run dev
+
+## Usage
 `GET /payment`
 <br><br>
 `GET /payment/:id`
@@ -19,3 +42,7 @@
 `POST /payment`
 <br><br>
 Body: { "value": "number", "description": "string" }
+
+## License
+
+MIT
