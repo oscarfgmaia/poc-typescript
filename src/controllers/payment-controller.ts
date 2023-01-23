@@ -1,7 +1,7 @@
 import { Payment } from "../protocols.js";
 import { Request, Response } from "express";
 import paymentsRepository from "../repositories/payment-repository.js";
-import httpStatus, { NOT_FOUND } from "http-status";
+import httpStatus from "http-status";
 
 export async function registerPayment(req: Request, res: Response) {
   const payment = req.body as Payment;
@@ -35,6 +35,15 @@ export async function getPayment(req: Request, res: Response) {
     } else {
       return res.send(payments.rows[0]);
     }
+  } catch (error) {
+    res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
+  }
+}
+export async function getTotal(req: Request, res: Response) {
+  try {
+    console.log('a');
+    const total = await paymentsRepository.getTotal();
+    res.send(total.rows[0])
   } catch (error) {
     res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
   }

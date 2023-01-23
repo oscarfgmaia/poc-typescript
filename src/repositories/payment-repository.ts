@@ -41,6 +41,16 @@ export async function getPayment(id: string): Promise<QueryResult<Payment>> {
     };
   }
 }
+export async function getTotal(): Promise<QueryResult<Payment>> {
+  try {
+    return await connection.query("SELECT SUM(value) FROM payments;");
+  } catch (error) {
+    throw {
+      name: "Database",
+      message: "anything went wrong in connection with database",
+    };
+  }
+}
 
 async function deletePayment(id: string) {
   try {
@@ -81,6 +91,7 @@ const paymentsRepository = {
   deletePayment,
   updatePayment,
   getPayment,
+  getTotal,
 };
 
 export default paymentsRepository;
