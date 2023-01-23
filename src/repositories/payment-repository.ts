@@ -11,7 +11,10 @@ async function registerPayment(payment: Payment) {
       [payment.value, payment.description]
     );
   } catch (error) {
-    throw error;
+    throw {
+      name: "Database",
+      message: "anything went wrong in connection with database",
+    };
   }
 }
 
@@ -21,7 +24,21 @@ async function getAllPayments(): Promise<QueryResult<Payment>> {
         SELECT * FROM payments;
       `);
   } catch (error) {
-    throw error;
+    throw {
+      name: "Database",
+      message: "anything went wrong in connection with database",
+    };
+  }
+}
+
+export async function getPayment(id: string): Promise<QueryResult<Payment>> {
+  try {
+    return await connection.query("SELECT * FROM payments WHERE id=$1", [id]);
+  } catch (error) {
+    throw {
+      name: "Database",
+      message: "anything went wrong in connection with database",
+    };
   }
 }
 
@@ -34,22 +51,27 @@ async function deletePayment(id: string) {
       [id]
     );
   } catch (error) {
-    throw error;
+    throw {
+      name: "Database",
+      message: "anything went wrong in connection with database",
+    };
   }
 }
 
 //TODO FIX UPDATE
 async function updatePayment(payment: Payment, id: string) {
   try {
-
     await connection.query(
       `
-            UPDATE payments SET value=$2, description=$3 WHERE id=$4;
-          `,
+      UPDATE payments SET value=$1, description=$2 WHERE id=$3;
+    `,
       [payment.value, payment.description, id]
     );
   } catch (error) {
-    throw error;
+    throw {
+      name: "Database",
+      message: "anything went wrong in connection with database",
+    };
   }
 }
 
@@ -58,6 +80,7 @@ const paymentsRepository = {
   getAllPayments,
   deletePayment,
   updatePayment,
+  getPayment,
 };
 
 export default paymentsRepository;
